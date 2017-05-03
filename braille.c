@@ -1,12 +1,4 @@
-int sizeOfArray(int *array) {
-    return sizeof(array) / sizeof(int);
-}
-
 int isFromFirstSerie(int* array) {
-    
-    if(sizeOfArray(array) != 6) {
-        return 0;
-    }
     
     int pos1 = array[0],
         pos2 = array[1],
@@ -77,11 +69,7 @@ int isFromFirstSerie(int* array) {
 
 int isFromSecondSerie(int *array){
     
-    if(sizeOfArray(array) != 6) {
-        return 0;
-    }
-    
-    if(array[3]==1 && array[6]==0){
+    if(array[2]==1 && array[5]==0){
         return 1;
     } else
         return 0;
@@ -89,11 +77,7 @@ int isFromSecondSerie(int *array){
 
 int isFromThirdSerie(int *array){
     
-    if(sizeOfArray(array) != 6) {
-        return 0;
-    }
-    
-    if(array[3] == 1 && array[6] == 1) {
+    if(array[2] == 1 && array[5] == 1) {
         return 1;
     } else
         return 0;
