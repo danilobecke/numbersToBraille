@@ -82,3 +82,54 @@ int isFromThirdSerie(int *array){
     } else
         return 0;
 }
+
+int checkSpecialChar(int* array) {
+    if(array[3] == 1 && array[4] == 1 && array[5] == 1) {
+        if(array[0] == 0 && array[1] == 1 && array[2] == 0) {
+            return 'w';
+        } else if(array[0] == 1 && array[1] == 0 && array[2] == 1) {
+            return 'y';
+        }
+    }
+    return ' ';
+}
+
+char decodeChar(int *array) {
+    
+    int firstSerie = isFromFirstSerie(array),
+        secondSerie = isFromSecondSerie(array),
+        thirdSerie = isFromThirdSerie(array);
+    
+    //is alphabetic char
+    if(firstSerie != 0) {
+        if(secondSerie == 1) {
+            return (char)((int)'j' + firstSerie);
+        } else if(thirdSerie == 1) {
+            if(firstSerie < 2) {
+                return (char)((int)'t' + firstSerie);
+            } else {
+                switch (firstSerie) {
+                    case 3:
+                        return 'x';
+                        break;
+                    case 5:
+                        return 'z';
+                        break;
+                    default:
+                        return checkSpecialChar(array);
+                        break;
+                }
+            }
+        } else {
+            char special = checkSpecialChar(array);
+            if(special == ' ') {
+                return (char)((int)'a' + firstSerie - 1);
+            } else {
+                return special;
+            }
+        }
+    } /*else {
+        
+    }*/
+    return ' ';
+}
