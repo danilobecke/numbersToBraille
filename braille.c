@@ -80,7 +80,7 @@ int isFromFirstSequence(int* array) {
  @param array Array with the braille cell.
  @return 1 if it is or 0.
  */
-int isFromSecondSequence(int *array){
+int isFromSecondSequence(int *array) {
     
     if(array[2]==1 && array[5]==0){
         return 1;
@@ -94,11 +94,24 @@ int isFromSecondSequence(int *array){
  @param array Array with the braille cell.
  @return 1 if it is or 0.
  */
-int isFromThirdSequence(int *array){
+int isFromThirdSequence(int *array) {
     
-    if(array[2] == 1 && array[5] == 1) {
+    if(array[2] == 1 && array[5] == 1)
         return 1;
-    } else
+    else
+        return 0;
+}
+
+/**
+ Checks if the cell is of the forth sequence.
+ 
+ @param array Array with the braille cell.
+ @return 1 if it is or 0.
+ */
+int isFromForthSequence(int *array) {
+    if(array[2] == 0 && array[5] == 1)
+        return 1;
+    else
         return 0;
 }
 
@@ -106,8 +119,6 @@ int checkSpecialChar(int* array) {
     if(array[3] == 1 && array[4] == 1 && array[5] == 1) {
         if(array[0] == 0 && array[1] == 1 && array[2] == 0) {
             return 'w';
-        } else if(array[0] == 1 && array[1] == 0 && array[2] == 1) {
-            return 'y';
         }
     }
     return ' ';
@@ -115,40 +126,44 @@ int checkSpecialChar(int* array) {
 
 char decodeChar(int *array) {
     
-    int firstSerie = isFromFirstSequence(array),
-        secondSerie = isFromSecondSequence(array),
-        thirdSerie = isFromThirdSequence(array);
+    int firstSequence = isFromFirstSequence(array),
+        secondSequence = isFromSecondSequence(array),
+        thirdSequence = isFromThirdSequence(array),
+        forthSequence = isFromForthSequence(array);
     
-    //is alphabetic char
-    if(firstSerie != 0) {
-        if(secondSerie == 1) {
-            return (char)((int)'j' + firstSerie);
-        } else if(thirdSerie == 1) {
-            if(firstSerie < 2) {
-                return (char)((int)'t' + firstSerie);
-            } else {
-                switch (firstSerie) {
-                    case 3:
-                        return 'x';
-                        break;
-                    case 5:
-                        return 'z';
-                        break;
-                    default:
-                        return checkSpecialChar(array);
-                        break;
-                }
+    if(firstSequence != 0) {
+        //is from 1st + 2nd sequences
+        if(secondSequence == 1) {
+            return (char)((int)'j' + firstSequence);
+        }
+        // is from 1st + 3rd sequences
+        else if(thirdSequence == 1) {
+            // letter before w
+            if(firstSequence < 3) {
+                return (char)((int)'t' + firstSequence);
             }
-        } else {
-            char special = checkSpecialChar(array);
-            if(special == ' ') {
-                return (char)((int)'a' + firstSerie - 1);
-            } else {
-                return special;
+            // letter after w
+            else if(firstSequence < 6) {
+                return (char)((int)'t' + firstSequence + 1);
+            }
+            // symbol isn't from alphabet
+            else {
+                return checkSpecialChar(array);
             }
         }
-    } /*else {
+        // is from 1st + 4th sequences
+        else if(forthSequence == 1) {
+            //TODO: fix here
+            return checkSpecialChar(array);
+        }
+        // is from 1st sequence
+        else {
+            return (char)((int)'a' + firstSequence - 1);
+        }
+    }
+    // symbol isn't from first sequence
+    else {
         
-    }*/
+    }
     return ' ';
 }
