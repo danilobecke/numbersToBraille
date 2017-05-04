@@ -1,4 +1,4 @@
 all:
-	@gcc -o test testTarget.c cellsFactory.c
+	@gcc -o test UnitTests/testTarget.c UnitTests/cellsFactory.c
 	@./test
 	@rm test
