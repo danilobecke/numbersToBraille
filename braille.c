@@ -1,4 +1,11 @@
-int isFromFirstSerie(int* array) {
+/**
+ Checks if the cell is of the first sequence.
+ Note: the sequences are indexed by 1.
+ 
+ @param array Array with the braille cell.
+ @return 0 if it isn't or the position inside the sequence
+ */
+int isFromFirstSequence(int* array) {
     
     int pos1 = array[0],
         pos2 = array[1],
@@ -67,7 +74,13 @@ int isFromFirstSerie(int* array) {
     
 }
 
-int isFromSecondSerie(int *array){
+/**
+ Checks if the cell is of the second sequence.
+ 
+ @param array Array with the braille cell.
+ @return 1 if it is or 0.
+ */
+int isFromSecondSequence(int *array){
     
     if(array[2]==1 && array[5]==0){
         return 1;
@@ -75,7 +88,13 @@ int isFromSecondSerie(int *array){
         return 0;
 }
 
-int isFromThirdSerie(int *array){
+/**
+ Checks if the cell is of the third sequence.
+ 
+ @param array Array with the braille cell.
+ @return 1 if it is or 0.
+ */
+int isFromThirdSequence(int *array){
     
     if(array[2] == 1 && array[5] == 1) {
         return 1;
@@ -96,9 +115,9 @@ int checkSpecialChar(int* array) {
 
 char decodeChar(int *array) {
     
-    int firstSerie = isFromFirstSerie(array),
-        secondSerie = isFromSecondSerie(array),
-        thirdSerie = isFromThirdSerie(array);
+    int firstSerie = isFromFirstSequence(array),
+        secondSerie = isFromSecondSequence(array),
+        thirdSerie = isFromThirdSequence(array);
     
     //is alphabetic char
     if(firstSerie != 0) {
