@@ -1,6 +1,4 @@
 #include "cellsFactory.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 brailleCell letterFromFirstSequence(char decoded) {
     

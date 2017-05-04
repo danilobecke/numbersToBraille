@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#ifndef Header_h
-#define Header_h
+#ifndef Braille_h
+#define Braille_h
 
 /**
  Decodes a braille cell.
@@ -11,4 +11,4 @@
  */
 char decodeChar(int *array);
 
-#endif /* Header_h */
+#endif /* Braille_h */
