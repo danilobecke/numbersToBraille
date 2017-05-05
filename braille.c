@@ -108,7 +108,7 @@ int isFromThirdSequence(int *array) {
  @param array Array with the braille cell.
  @return 1 if it is or 0.
  */
-int isFromForthSequence(int *array) {
+int isFromFourthSequence(int *array) {
     if(array[2] == 0 && array[5] == 1)
         return 1;
     else
@@ -129,7 +129,7 @@ char decodeChar(int *array) {
     int firstSequence = isFromFirstSequence(array),
         secondSequence = isFromSecondSequence(array),
         thirdSequence = isFromThirdSequence(array),
-        forthSequence = isFromForthSequence(array);
+        fourthSequence = isFromFourthSequence(array);
     
     if(firstSequence != 0) {
         //is from 1st + 2nd sequences
@@ -152,7 +152,7 @@ char decodeChar(int *array) {
             }
         }
         // is from 1st + 4th sequences
-        else if(forthSequence == 1) {
+        else if(fourthSequence == 1) {
             //TODO: fix here
             return checkSpecialChar(array);
         }
