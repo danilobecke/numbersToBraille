@@ -7,6 +7,9 @@
  */
 int isFromFirstSequence(int* array) {
     
+    if(array[2] != 0 || array[5] != 0)
+        return 0;
+    
     int pos1 = array[0],
         pos2 = array[1],
         pos4 = array[3],
@@ -115,6 +118,26 @@ int isFromFourthSequence(int *array) {
         return 0;
 }
 
+/**
+ Checks if the cell is of the fifth sequence
+
+ @param array Array with the braille cell
+ @return 0 if it isn't or the position inside the sequence
+ */
+int isFromFifthSequence(int *array) {
+    if(array[0] !=0 || array[3] != 0)
+        return 0;
+    int i, aux[6];
+    for(i=1; i<6; i++) {
+        if(i != 3)
+            aux[i-1] = array[i];
+        else
+            aux[i-1] = 0;
+    }
+    aux[5] = 0;
+    return isFromFirstSequence(aux);
+}
+
 int checkSpecialChar(int* array) {
     if(array[3] == 1 && array[4] == 1 && array[5] == 1) {
         if(array[0] == 0 && array[1] == 1 && array[2] == 0) {
@@ -126,12 +149,14 @@ int checkSpecialChar(int* array) {
 
 char decodeChar(int *array) {
     
-    int firstSequence = isFromFirstSequence(array),
+    int aux[6] = {array[0],array[1],0,array[3],array[4],0},
+        firstSequence = isFromFirstSequence(aux),
         secondSequence = isFromSecondSequence(array),
         thirdSequence = isFromThirdSequence(array),
-        fourthSequence = isFromFourthSequence(array);
+        fourthSequence = isFromFourthSequence(array),
+        fifthSequence = isFromFifthSequence(array);
     
-    if(firstSequence != 0) {
+    if(firstSequence != 0 && fifthSequence == 0) {
         //is from 1st + 2nd sequences
         if(secondSequence == 1) {
             return (char)((int)'j' + firstSequence);
@@ -163,7 +188,9 @@ char decodeChar(int *array) {
     }
     // symbol isn't from first sequence
     else {
-        
+        if(fifthSequence != 0) {
+            
+        }
     }
     return ' ';
 }
