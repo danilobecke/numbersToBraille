@@ -16,7 +16,7 @@ int isFromFirstSequence(int* array) {
         pos5 = array[4];
     
     if(pos1 == 0) {
-        if(pos2 != 1 && pos4 != 1) {
+        if(pos2 != 1 || pos4 != 1) {
             return 0;
         } else {
             if(pos5 == 1) {
@@ -138,6 +138,19 @@ int isFromFifthSequence(int *array) {
     return isFromFirstSequence(aux);
 }
 
+/**
+ Checks if the cell is of the sixth sequence.
+ 
+ @param array Array with the braille cell.
+ @return 1 if it is or 0.
+ */
+int isFromSixthSequence(int *array) {
+    if(array[2] == 1)
+        return 1;
+    else
+        return 0;
+}
+
 int checkSpecialChar(int* array) {
     if(array[3] == 1 && array[4] == 1 && array[5] == 1) {
         if(array[0] == 0 && array[1] == 1 && array[2] == 0) {
@@ -188,8 +201,17 @@ char decodeChar(int *array) {
     }
     // symbol isn't from first sequence
     else {
+        // is from 5th sequence
         if(fifthSequence != 0) {
-            
+            //TODO: fifth sequence decoder
+        }
+        // is from 6th sequence
+        else if(isFromSixthSequence(array) != 0) {
+            //TODO: sixth sequence decoder
+        }
+        // is from 7th sequence
+        else {
+            //TODO: seventh sequence decoder
         }
     }
     return ' ';
