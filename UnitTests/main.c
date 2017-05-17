@@ -49,10 +49,16 @@
         mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
         mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
         
+        decodeChar(clearState);
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        
         sprintf(resultMsg, "error with number %d", 203);
         mu_assert(resultMsg, decodeChar(numbers[2].array) == '2');
         mu_assert(resultMsg, decodeChar(numbers[0].array) == '0');
         mu_assert(resultMsg, decodeChar(numbers[3].array) == '3');
+        
+        decodeChar(clearState);
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
         sprintf(resultMsg, "error with number %d", 467890);
         mu_assert(resultMsg, decodeChar(numbers[4].array) == '4');
@@ -136,6 +142,7 @@
 
 // MAIN
     int main(int argc, char **argv) {
+        
         char *result = all_tests();
 
         printAlphabet();
