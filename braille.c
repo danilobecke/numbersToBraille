@@ -1,3 +1,9 @@
+typedef enum State {
+    DEFAULT, UPPERCASE, NUMBER
+} state;
+
+state currentState = DEFAULT;
+
 /**
  Checks if the cell is of the first sequence.
  Note: the sequences are indexed by 1.
@@ -214,5 +220,5 @@ char decodeChar(int *array) {
             //TODO: seventh sequence decoder
         }
     }
-    return ' ';
+    return (char)0;
 }
