@@ -157,6 +157,32 @@ int isFromSixthSequence(int *array) {
         return 0;
 }
 
+
+/**
+ Decodes symbols of the sixth sequence.
+
+ @param array Array with the braille cell.
+ @return The decoded char.
+ */
+char sixthSequenceDecoder(int *array) {
+    if(array[3] == 0) {
+        if(array[5] == 0)
+            return ' ';//5
+        else
+            return ' ';//6
+    } else if(array[4] == 0) {
+        if(array[5] == 0)
+            return ' ';//1
+        else
+            return ' ';//3
+    } else if(array[5] == 0) {
+        return ' ';//2
+    } else {
+        currentState = NUMBER;
+        return (char)0;
+    }
+}
+
 int checkSpecialChar(int* array) {
     if(array[3] == 1 && array[4] == 1 && array[5] == 1) {
         if(array[0] == 0 && array[1] == 1 && array[2] == 0) {
@@ -174,35 +200,44 @@ char decodeChar(int *array) {
         thirdSequence = isFromThirdSequence(array),
         fourthSequence = isFromFourthSequence(array),
         fifthSequence = isFromFifthSequence(array);
+    int shouldKeepState = 0;
+    char decoded = (char)0;
     
     if(firstSequence != 0 && fifthSequence == 0) {
         //is from 1st + 2nd sequences
         if(secondSequence == 1) {
-            return (char)((int)'j' + firstSequence);
+            decoded = (char)((int)'j' + firstSequence);
         }
         // is from 1st + 3rd sequences
         else if(thirdSequence == 1) {
             // letter before w
             if(firstSequence < 3) {
-                return (char)((int)'t' + firstSequence);
+                decoded = (char)((int)'t' + firstSequence);
             }
             // letter after w
             else if(firstSequence < 6) {
-                return (char)((int)'t' + firstSequence + 1);
+                decoded = (char)((int)'t' + firstSequence + 1);
             }
             // symbol isn't from alphabet
             else {
-                return checkSpecialChar(array);
+                decoded = checkSpecialChar(array);
             }
         }
         // is from 1st + 4th sequences
         else if(fourthSequence == 1) {
             //TODO: fix here
-            return checkSpecialChar(array);
+            decoded = checkSpecialChar(array);
         }
         // is from 1st sequence
         else {
-            return (char)((int)'a' + firstSequence - 1);
+            if(currentState == DEFAULT)
+                decoded = (char)((int)'a' + firstSequence - 1);
+            else if(currentState == NUMBER){
+                int aux = firstSequence <= 9 ? firstSequence : 0;
+                shouldKeepState = 1;
+                decoded = (char)(48 + aux);
+            } else
+                decoded = (char)0;
         }
     }
     // symbol isn't from first sequence
@@ -213,12 +248,17 @@ char decodeChar(int *array) {
         }
         // is from 6th sequence
         else if(isFromSixthSequence(array) != 0) {
-            //TODO: sixth sequence decoder
+            decoded = sixthSequenceDecoder(array);
+            if(currentState != DEFAULT)
+                shouldKeepState = 1;
         }
         // is from 7th sequence
         else {
             //TODO: seventh sequence decoder
         }
     }
-    return (char)0;
+    if(shouldKeepState != 1)
+        currentState = DEFAULT;
+        
+    return decoded;
 }

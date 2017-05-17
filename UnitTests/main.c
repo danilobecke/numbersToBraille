@@ -13,15 +13,96 @@
         
         for(i=0; i<26; i++) {
             selected = alphabet[i];
-            sprintf(resultMsg, "error with %c", selected.decoded);
+            sprintf(resultMsg, "error with letter %c", selected.decoded);
             mu_assert(resultMsg, decodeChar(selected.array) == selected.decoded);
         }
         
         return 0;
     }
 
+    static char * test_oneDigitNumbers() {
+        
+        int i, clearState[6] = {1,1,1,1,0,0};
+        brailleCell *numbers = getNumbersCells(), selected;
+        char *resultMsg = malloc(10*sizeof(char));
+        
+        for(i=0; i<10; i++) {
+            selected = numbers[i];
+            sprintf(resultMsg, "error with number %d", i);
+            mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+            mu_assert(resultMsg, decodeChar(selected.array) == (char)(i+48));
+            decodeChar(clearState);
+        }
+        
+        return 0;
+    }
+
+    static char * test_moreThanOneDigitsNumbers() {
+        
+        brailleCell *numbers = getNumbersCells();
+        char *resultMsg = malloc(10*sizeof(char));
+        int clearState[6] = {1,1,1,1,0,0};
+        
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        
+        sprintf(resultMsg, "error with number %d", 15);
+        mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
+        
+        sprintf(resultMsg, "error with number %d", 203);
+        mu_assert(resultMsg, decodeChar(numbers[2].array) == '2');
+        mu_assert(resultMsg, decodeChar(numbers[0].array) == '0');
+        mu_assert(resultMsg, decodeChar(numbers[3].array) == '3');
+        
+        sprintf(resultMsg, "error with number %d", 467890);
+        mu_assert(resultMsg, decodeChar(numbers[4].array) == '4');
+        mu_assert(resultMsg, decodeChar(numbers[6].array) == '6');
+        mu_assert(resultMsg, decodeChar(numbers[7].array) == '7');
+        mu_assert(resultMsg, decodeChar(numbers[8].array) == '8');
+        mu_assert(resultMsg, decodeChar(numbers[9].array) == '9');
+        mu_assert(resultMsg, decodeChar(numbers[0].array) == '0');
+        
+        decodeChar(clearState);
+        
+        return 0;
+    }
+
+    static char * test_letterAfterNumber() {
+        
+        brailleCell *numbers = getNumbersCells(),
+                    *alphabet = getAlphabetCells();
+        char *resultMsg = malloc(10*sizeof(char));
+        
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        
+        sprintf(resultMsg, "error with %dok", 15);
+        mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
+        mu_assert(resultMsg, decodeChar(alphabet[14].array) == 'o');
+        mu_assert(resultMsg, decodeChar(alphabet[10].array) == 'k');
+        
+        sprintf(resultMsg, "error with ok%d", 15);
+        mu_assert(resultMsg, decodeChar(alphabet[14].array) == 'o');
+        mu_assert(resultMsg, decodeChar(alphabet[10].array) == 'k');
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
+        
+        sprintf(resultMsg, "error with %dopa", 15);
+        mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
+        mu_assert(resultMsg, decodeChar(alphabet[14].array) == 'o');
+        mu_assert(resultMsg, decodeChar(alphabet[15].array) == 'p');
+        mu_assert(resultMsg, decodeChar(alphabet[0].array) == 'a');
+        
+        return 0;
+    }
+
     static char * all_tests() {
         mu_run_test(test_alphabet);
+        mu_run_test(test_oneDigitNumbers);
+        mu_run_test(test_moreThanOneDigitsNumbers);
+        mu_run_test(test_letterAfterNumber);
         return 0;
     }
 
