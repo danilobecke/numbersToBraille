@@ -26,20 +26,34 @@
     }
 
 // PRINT
-void printAlphabet() {
-    brailleCell *alphabet = getAlphabetCells(), selected;
-    int i;
-    
-    printf("----------\n");
-    
-    for(i=0; i<26; i++) {
-        selected = alphabet[i];
-        printf("%c: %d%d%d%d%d%d\n", selected.decoded, selected.array[0], selected.array[1], selected.array[2], selected.array[3], selected.array[4], selected.array[5]);
+    void printAlphabet() {
+        brailleCell *alphabet = getAlphabetCells(), selected;
+        int i;
+        
+        printf("----------\n");
+        printf("ALPHABET\n");
+        
+        for(i=0; i<26; i++) {
+            selected = alphabet[i];
+            printf("%c: %d%d%d%d%d%d\n", selected.decoded, selected.array[0], selected.array[1], selected.array[2], selected.array[3], selected.array[4], selected.array[5]);
+        }
     }
-    
-    printf("----------\n");
-}
 
+    void printNumbers() {
+        brailleCell *numbers = getNumbersCells(), selected;
+        int i;
+        
+        printf("----------\n");
+        printf("NUMBERS\n");
+        
+        for(i=0; i<10; i++) {
+            selected = numbers[i];
+            printf("%d: %d%d%d%d%d%d ", i, numbers[10].array[0], numbers[10].array[1], numbers[10].array[2], numbers[10].array[3], numbers[10].array[4], numbers[10].array[5]);
+            printf("%d%d%d%d%d%d\n", selected.array[0], selected.array[1], selected.array[2], selected.array[3], selected.array[4], selected.array[5]);
+        }
+    }
+
+// MAIN
     int main(int argc, char **argv) {
         char *result = all_tests();
         if (result != 0) {
@@ -51,6 +65,8 @@ void printAlphabet() {
         printf("Tests run: %d\n", tests_run);
         
         printAlphabet();
+        printNumbers();
+        printf("----------\n");
         
         return result != 0;
     }

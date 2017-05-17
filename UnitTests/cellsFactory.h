@@ -10,5 +10,6 @@ typedef struct brailleCell {
 } brailleCell;
 
 brailleCell* getAlphabetCells();
+brailleCell* getNumbersCells();
 
 #endif /* CellFactory_h */

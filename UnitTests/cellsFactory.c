@@ -100,3 +100,28 @@ brailleCell* getAlphabetCells() {
     
     return alphabet;
 }
+
+brailleCell* getNumbersCells() {
+    
+    int i;
+    brailleCell *numbers = malloc(11*sizeof(brailleCell));
+    
+    char letter = 'a';
+    for(i=1; i<10; i++) {
+        numbers[i] = getLetter(letter);
+        letter++;
+    }
+    numbers[0] = getLetter(letter);
+    
+    brailleCell numberSymbol;
+    numberSymbol.decoded = (char)0;
+    for(i=0;i<6;i++) {
+        if(i<2)
+            numberSymbol.array[i] = 0;
+        else
+            numberSymbol.array[i] = 1;
+    }
+    numbers[10] = numberSymbol;
+    
+    return numbers;
+}
