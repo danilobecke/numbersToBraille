@@ -3,6 +3,7 @@ typedef enum State {
 } state;
 
 state currentState = DEFAULT;
+int shouldKeepState = 0;
 
 /**
  Checks if the cell is of the first sequence.
@@ -157,6 +158,25 @@ int isFromSixthSequence(int *array) {
         return 0;
 }
 
+/**
+ Decodes symbols of the fifth sequence.
+ 
+ @param position Position inside the sequence.
+ @return The decoded char.
+ */
+char fifthSequenceDecoder(int position) {
+    char decoded;
+    switch (position) {
+        case 1:
+            shouldKeepState = 1;
+            decoded = ','; //decimal separator and comma
+            break;
+        default:
+            decoded = (char)0;
+            break;
+    }
+    return decoded;
+}
 
 /**
  Decodes symbols of the sixth sequence.
@@ -166,9 +186,10 @@ int isFromSixthSequence(int *array) {
  */
 char sixthSequenceDecoder(int *array) {
     if(array[3] == 0) {
-        if(array[5] == 0)
-            return ' ';//5
-        else
+        if(array[5] == 0) {
+            shouldKeepState = 1;
+            return '.'; //class separator
+        } else
             return ' ';//6
     } else if(array[4] == 0) {
         if(array[5] == 0)
@@ -179,6 +200,7 @@ char sixthSequenceDecoder(int *array) {
         return ' ';//2
     } else {
         currentState = NUMBER;
+        shouldKeepState = 1;
         return (char)0;
     }
 }
@@ -200,9 +222,9 @@ char decodeChar(int *array) {
         thirdSequence = isFromThirdSequence(array),
         fourthSequence = isFromFourthSequence(array),
         fifthSequence = isFromFifthSequence(array);
-    int shouldKeepState = 0;
     char decoded = (char)0;
     
+    shouldKeepState = 0;
     if(firstSequence != 0 && fifthSequence == 0) {
         //is from 1st + 2nd sequences
         if(secondSequence == 1) {
@@ -244,13 +266,11 @@ char decodeChar(int *array) {
     else {
         // is from 5th sequence
         if(fifthSequence != 0) {
-            //TODO: fifth sequence decoder
+            decoded = fifthSequenceDecoder(fifthSequence);
         }
         // is from 6th sequence
         else if(isFromSixthSequence(array) != 0) {
             decoded = sixthSequenceDecoder(array);
-            if(currentState != DEFAULT)
-                shouldKeepState = 1;
         }
         // is from 7th sequence
         else {

@@ -41,7 +41,9 @@
         
         brailleCell *numbers = getNumbersCells();
         char *resultMsg = malloc(10*sizeof(char));
-        int clearState[6] = {1,1,1,1,0,0};
+        int clearState[6] = {1,1,1,1,0,0},
+            separator[6] = {0,0,1,0,0,0},
+            decimal[6] = {0,1,0,0,0,0};
         
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
@@ -57,6 +59,7 @@
         mu_assert(resultMsg, decodeChar(numbers[0].array) == '0');
         mu_assert(resultMsg, decodeChar(numbers[3].array) == '3');
         
+        // class separator
         decodeChar(clearState);
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
@@ -64,9 +67,19 @@
         mu_assert(resultMsg, decodeChar(numbers[4].array) == '4');
         mu_assert(resultMsg, decodeChar(numbers[6].array) == '6');
         mu_assert(resultMsg, decodeChar(numbers[7].array) == '7');
+        mu_assert(resultMsg, decodeChar(separator) == '.');
         mu_assert(resultMsg, decodeChar(numbers[8].array) == '8');
         mu_assert(resultMsg, decodeChar(numbers[9].array) == '9');
         mu_assert(resultMsg, decodeChar(numbers[0].array) == '0');
+        
+        // decimal
+        decodeChar(clearState);
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        
+        sprintf(resultMsg, "error with number %d,%d", 3, 5);
+        mu_assert(resultMsg, decodeChar(numbers[3].array) == '3');
+        mu_assert(resultMsg, decodeChar(decimal) == ',');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
         
         decodeChar(clearState);
         
