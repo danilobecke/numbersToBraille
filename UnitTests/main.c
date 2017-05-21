@@ -41,7 +41,7 @@
         
         brailleCell *numbers = getNumbersCells();
         char *resultMsg = malloc(10*sizeof(char));
-        int clearState[6] = {1,1,1,1,0,0},
+        int latinLower[6] = {0,0,0,0,1,0},
             separator[6] = {0,0,1,0,0,0},
             decimal[6] = {0,1,0,0,0,0};
         
@@ -51,7 +51,7 @@
         mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
         mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
         
-        decodeChar(clearState);
+        decodeChar(latinLower);
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
         sprintf(resultMsg, "error with number %d", 203);
@@ -60,7 +60,7 @@
         mu_assert(resultMsg, decodeChar(numbers[3].array) == '3');
         
         // class separator
-        decodeChar(clearState);
+        decodeChar(latinLower);
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
         sprintf(resultMsg, "error with number %d", 467890);
@@ -73,7 +73,7 @@
         mu_assert(resultMsg, decodeChar(numbers[0].array) == '0');
         
         // decimal
-        decodeChar(clearState);
+        decodeChar(latinLower);
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
         sprintf(resultMsg, "error with number %d,%d", 3, 5);
@@ -81,7 +81,7 @@
         mu_assert(resultMsg, decodeChar(decimal) == ',');
         mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
         
-        decodeChar(clearState);
+        decodeChar(latinLower);
         
         return 0;
     }
@@ -91,6 +91,7 @@
         brailleCell *numbers = getNumbersCells(),
                     *alphabet = getAlphabetCells();
         char *resultMsg = malloc(10*sizeof(char));
+        int latinLower[6] = {0,0,0,0,1,0};
         
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
         
@@ -113,6 +114,25 @@
         mu_assert(resultMsg, decodeChar(alphabet[14].array) == 'o');
         mu_assert(resultMsg, decodeChar(alphabet[15].array) == 'p');
         mu_assert(resultMsg, decodeChar(alphabet[0].array) == 'a');
+        
+        sprintf(resultMsg, "error with %daop", 15);
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
+        mu_assert(resultMsg, decodeChar(latinLower) == (char)0);
+        mu_assert(resultMsg, decodeChar(alphabet[0].array) == 'a');
+        mu_assert(resultMsg, decodeChar(alphabet[14].array) == 'o');
+        mu_assert(resultMsg, decodeChar(alphabet[15].array) == 'p');
+        
+        sprintf(resultMsg, "error with aok%d", 15);
+        mu_assert(resultMsg, decodeChar(alphabet[0].array) == 'a');
+        mu_assert(resultMsg, decodeChar(alphabet[14].array) == 'o');
+        mu_assert(resultMsg, decodeChar(alphabet[10].array) == 'k');
+        mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);
+        mu_assert(resultMsg, decodeChar(numbers[1].array) == '1');
+        mu_assert(resultMsg, decodeChar(numbers[5].array) == '5');
+        
+        mu_assert(resultMsg, decodeChar(latinLower) == (char)0);
         
         return 0;
     }

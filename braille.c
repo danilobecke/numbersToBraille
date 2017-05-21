@@ -205,6 +205,42 @@ char sixthSequenceDecoder(int *array) {
     }
 }
 
+/**
+ Decodes symbols of the seventh sequence.
+ 
+ @param array Array with the braille cell.
+ @return The decoded char.
+ */
+char seventhSequenceDecoder(int *array) {
+    if(array[3] == 0) {
+        if(array[4] == 0) {
+            return (char)0; // 7
+        } else {
+            if(array[5] == 0) {
+                currentState = DEFAULT;
+                shouldKeepState = 1;
+                return (char)0;
+            } else {
+                return (char)0; //6
+            }
+        }
+    } else {
+        if(array[4] == 0) {
+            if(array[5] == 1) {
+                return (char)0; //5
+            } else {
+                return (char)0; //1
+            }
+        } else {
+            if(array[5] == 1) {
+                return (char)0; //3
+            } else {
+                return (char)0; //2
+            }
+        }
+    }
+}
+
 int checkSpecialChar(int* array) {
     if(array[3] == 1 && array[4] == 1 && array[5] == 1) {
         if(array[0] == 0 && array[1] == 1 && array[2] == 0) {
@@ -274,7 +310,7 @@ char decodeChar(int *array) {
         }
         // is from 7th sequence
         else {
-            //TODO: seventh sequence decoder
+            decoded = seventhSequenceDecoder(array);
         }
     }
     if(shouldKeepState != 1)
