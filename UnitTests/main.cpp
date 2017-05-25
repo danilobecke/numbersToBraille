@@ -1,6 +1,6 @@
-#include "cellsFactory.h"
-#include "../braille.h"
-#include "minunit.h"
+#include "CellsFactory.hpp"
+#include "../Braille.hpp"
+#include "minunit.hpp"
 
 //TESTS
     int tests_run = 0;
@@ -9,7 +9,7 @@
         
         int i;
         brailleCell *alphabet = getAlphabetCells(), selected;
-        char *resultMsg = malloc(10*sizeof(char));
+        char *resultMsg = (char*) malloc(10*sizeof(char));
         
         for(i=0; i<26; i++) {
             selected = alphabet[i];
@@ -24,7 +24,7 @@
         
         int i, clearState[6] = {1,1,1,1,0,0};
         brailleCell *numbers = getNumbersCells(), selected;
-        char *resultMsg = malloc(10*sizeof(char));
+        char *resultMsg = (char*) malloc(10*sizeof(char));
         
         for(i=0; i<10; i++) {
             selected = numbers[i];
@@ -40,7 +40,7 @@
     static char * test_moreThanOneDigitsNumbers() {
         
         brailleCell *numbers = getNumbersCells();
-        char *resultMsg = malloc(10*sizeof(char));
+        char *resultMsg = (char*) malloc(10*sizeof(char));
         int latinLower[6] = {0,0,0,0,1,0},
             separator[6] = {0,0,1,0,0,0},
             decimal[6] = {0,1,0,0,0,0};
@@ -90,7 +90,7 @@
         
         brailleCell *numbers = getNumbersCells(),
                     *alphabet = getAlphabetCells();
-        char *resultMsg = malloc(10*sizeof(char));
+        char *resultMsg = (char*) malloc(10*sizeof(char));
         int latinLower[6] = {0,0,0,0,1,0};
         
         mu_assert(resultMsg, decodeChar(numbers[10].array) == (char)0);

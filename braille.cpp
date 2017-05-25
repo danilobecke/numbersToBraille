@@ -1,3 +1,13 @@
+//
+//  Braille.cpp
+//  numbersToBrailleXcode
+//
+//  Created by Danilo Becke on 24/05/17.
+//  Copyright © 2017 Danilo Becke. All rights reserved.
+//
+
+#include "Braille.hpp"
+
 typedef enum State {
     DEFAULT, UPPERCASE, NUMBER
 } state;
@@ -18,9 +28,9 @@ int isFromFirstSequence(int* array) {
         return 0;
     
     int pos1 = array[0],
-        pos2 = array[1],
-        pos4 = array[3],
-        pos5 = array[4];
+    pos2 = array[1],
+    pos4 = array[3],
+    pos5 = array[4];
     
     if(pos1 == 0) {
         if(pos2 != 1 || pos4 != 1) {
@@ -127,7 +137,7 @@ int isFromFourthSequence(int *array) {
 
 /**
  Checks if the cell is of the fifth sequence
-
+ 
  @param array Array with the braille cell
  @return 0 if it isn't or the position inside the sequence
  */
@@ -180,7 +190,7 @@ char fifthSequenceDecoder(int position) {
 
 /**
  Decodes symbols of the sixth sequence.
-
+ 
  @param array Array with the braille cell.
  @return The decoded char.
  */
@@ -253,11 +263,11 @@ int checkSpecialChar(int* array) {
 char decodeChar(int *array) {
     
     int aux[6] = {array[0],array[1],0,array[3],array[4],0},
-        firstSequence = isFromFirstSequence(aux),
-        secondSequence = isFromSecondSequence(array),
-        thirdSequence = isFromThirdSequence(array),
-        fourthSequence = isFromFourthSequence(array),
-        fifthSequence = isFromFifthSequence(array);
+    firstSequence = isFromFirstSequence(aux),
+    secondSequence = isFromSecondSequence(array),
+    thirdSequence = isFromThirdSequence(array),
+    fourthSequence = isFromFourthSequence(array),
+    fifthSequence = isFromFifthSequence(array);
     char decoded = (char)0;
     
     shouldKeepState = 0;
@@ -315,6 +325,6 @@ char decodeChar(int *array) {
     }
     if(shouldKeepState != 1)
         currentState = DEFAULT;
-        
+    
     return decoded;
 }

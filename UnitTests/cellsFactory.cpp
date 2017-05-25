@@ -1,4 +1,12 @@
-#include "cellsFactory.h"
+//
+//  CellsFactory.cpp
+//  numbersToBrailleXcode
+//
+//  Created by Danilo Becke on 24/05/17.
+//  Copyright © 2017 Danilo Becke. All rights reserved.
+//
+
+#include "CellsFactory.hpp"
 
 brailleCell letterFromFirstSequence(char decoded) {
     
@@ -90,7 +98,7 @@ brailleCell getLetter(char decoded) {
 brailleCell* getAlphabetCells() {
     
     int i;
-    brailleCell *alphabet = malloc(26*sizeof(brailleCell));
+    brailleCell *alphabet = (brailleCell*) malloc(26*sizeof(brailleCell));
     
     char letter = 'a';
     for(i=0; i<26; i++) {
@@ -104,7 +112,7 @@ brailleCell* getAlphabetCells() {
 brailleCell* getNumbersCells() {
     
     int i;
-    brailleCell *numbers = malloc(11*sizeof(brailleCell));
+    brailleCell *numbers = (brailleCell*) malloc(11*sizeof(brailleCell));
     
     char letter = 'a';
     for(i=1; i<10; i++) {
