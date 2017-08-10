@@ -35,7 +35,7 @@ it will print the Portuguese braille alphabet and the feedback of the unit tests
 ### [WIP] Roadmap
 :white_check_mark:&nbsp;&nbsp;&nbsp;&nbsp;**lowercase alphabet**   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**uppercase alphabet**   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**numbers**     
+:white_check_mark:&nbsp;&nbsp;&nbsp;&nbsp;**numbers**     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**accessory symbols**     
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**math symbols**   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**typographic variants**   
